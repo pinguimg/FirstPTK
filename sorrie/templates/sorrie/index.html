@@ -264,7 +264,7 @@
 	              		<div class="col-lg-4 order-lg-last d-flex align-items-stretch">
 	              			<div class="img d-flex align-self-stretch" style="background-image: url({% static 'sorrie/images/dept-1.jpg' %});"></div>
 	              		</div>
-						<div class="col-{% if forloop.counter == 1 %}lg{%else%}md{% endif %}-8">
+						<div class="col-{% if forloop.counter == 1 %}lg{%endif%}{% if forloop.counter > 1 %}md{% endif %}-8">
 							{% for x in posts %}
 
 								{% if x.category in rootcategories and x.category == i %}
