@@ -8,14 +8,22 @@ from django.utils import timezone
 class IndexView(generic.ListView):
     model = Dentist
     template_name = 'sorrie/index.html'
-    categories = Category.objects.all()
     context_object_name = 'latest_dentist_list'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['dentists'] = Dentist
-        context['posts'] = Post
-        context['categories'] = Category.objects.all()
+        context['posts'] = Post.objects.all()
+        context['rootcategories'] = Category.objects.root_nodes()
+        roots = context['rootcategories']
+        #context['subcategories'] = Category.objects.add_related_count(IndexView.category_node.get_children(), Post, 'category', 'question_counts')
+        x = 1
+        for i in roots:
+
+            context['subcategories' + str(x)] = Category.objects.get(name=i).get_children()
+            x += 1
+
         return context
 
     def get_queryset(self):
