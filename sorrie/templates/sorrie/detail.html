@@ -1,0 +1,12 @@
+<h1>{{ dentist.dentist_name}}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 's' dentist.id %}" method="post">
+{% csrf_token %}
+{% for patient in dentist.patient_set.all %}
+    <input type="radio" name="patient" id="patient{{ forloop.counter }}" value="{{ patient.id }}">
+    <label for="patient{{ forloop.counter }}">{{ patient.patient_name }}</label><br>
+{% endfor %}
+<input type="submit" value="Salvar">
+</form>

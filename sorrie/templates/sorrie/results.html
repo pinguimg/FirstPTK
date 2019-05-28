@@ -1,0 +1,9 @@
+<h1>{{ dentist.dentist_name}}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ patient.patient_name}} -- {{ patient.name }} Nome{{ patient.name|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'sorrie:detail' dentist.id %}">Vote again?</a>
