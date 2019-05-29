@@ -250,7 +250,7 @@
 
 	            {% if rootcategories %}
 		            {% for i in rootcategories %}
-              <a class="nav-link ftco-animate {% if forloop.counter == 1 %}active {%else%}{% endif %} " id="v-pills-{% if forloop.counter <= 0 %}1{% else %}{{ forloop.counter }}{% endif %}-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-{{ forloop.counter }}" aria-selected="true">{{ i.name }}</a>
+              <a class="nav-link ftco-animate {% if forloop.counter == 1 %}active show {%else%}{% endif %} " id="v-pills-{% if forloop.counter <= 0 %}1{% else %}{{ forloop.counter }}{% endif %}-tab" data-toggle="pill" href="#v-pills-{% if forloop.counter <= 0 %}1{% else %}{{ forloop.counter }}{% endif %}" role="tab" aria-controls="v-pills-{{ forloop.counter }}" aria-selected="true">{{ i.name }}</a>
 		    {% endfor %}
 		             </div>
 			{% endif %}
@@ -259,7 +259,7 @@
 	            <div class="tab-content bg-light p-4 p-md-5 ftco-animate" id="v-pills-tabContent">
 
 					{% for i in rootcategories %}
-	              <div class="tab-pane{% if forloop.counter == 1 %} py-2{% endif %} fade{% if forloop.counter == 1 %} active show{% endif %}" id="v-pills-{% if forloop.counter <= 0 %}1{% else %}{{ forloop.counter }}{% endif %}" role="tabpanel" aria-labelledby="day-{% if forloop.counter <= 0 %}1{% else %}{{ forloop.counter }}{% endif %}-tab">
+	              <div class="tab-pane{% if forloop.counter == 1 %} py-2{% endif %} fade{% if forloop.counter == 1 %} show active{% endif %}" id="v-pills-{% if forloop.counter <= 0 %}1{% else %}{{ forloop.counter }}{% endif %}" role="tabpanel" aria-labelledby="{% if forloop.counter != 1 %}v-pills-{% endif %}day-{% if forloop.counter == 1  %}1{% else %}{{ forloop.counter }}{% endif %}-tab">
 		              <div class="row departments">
 	              		<div class="col-lg-4 order-lg-last d-flex align-items-stretch">
 	              			<div class="img d-flex align-self-stretch" style="background-image: url({% static 'sorrie/images/dept-1.jpg' %});"></div>
@@ -274,23 +274,26 @@
 								{% endfor %}
 
 							<div class="row mt-5 pt-2">
-								{% for x in posts %}
-								{% if x.category not in rootcategories %}
 
-												<div class="col-lg-6">
+
+								{% for x in posts %}
+
+									{% if x.category not in rootcategories and x.category.get_acestors in subcategories|stringformat:forloop.counter %}
+
+										<div class="col-lg-6">
 													<div class="services-2 d-flex">
 														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-first-aid-kit"></span></div>
 														<div class="text">
+
 															<h3>{{ x.title }}</h3>
-															<p>{{ x.content }}</p>
+															<p>{{x.content }}</p>
 														</div>
 
 													</div>
 												</div>
-						{% endif %}
+									{% endif %}
+								{% endfor %}
 
-
-							{% endfor %}
 						</div>
 						</div>
 					</div>
@@ -301,7 +304,6 @@
 	              </div>
 	            </div>
 	          </div>
-	        </div>
     </section>
 
 		<section class="ftco-section ftco-no-pt">
