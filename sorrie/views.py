@@ -1,5 +1,6 @@
 from django.http import request
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
+from django.template import RequestContext
 from django.views import generic
 from sorrie.models import Dentist, Category, Post
 from django.utils import timezone
@@ -11,14 +12,16 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_dentist_list'
 
 
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['dentists'] = Dentist
+        context['dentists'] = Dentist.objects.all()
         context['posts'] = Post.objects.all()
 
         return context
 
-    def get_queryset(self):
+    def get_queryset(self, **kwargs):
         """Return the last five published questions."""
         return Dentist.objects.order_by('-pub_date')[:8]
 

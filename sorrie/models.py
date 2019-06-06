@@ -31,6 +31,7 @@ class Post(models.Model):
     category = TreeForeignKey('Category', on_delete=models.CASCADE, null=True,blank=True, db_index=True)
     content = models.TextField('Content')
 
+
     def __str__(self):
         return self.title
 

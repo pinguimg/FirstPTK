@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
 	{% load static %}
+	  {% load mptt_tags %}
     <title>Dr.care - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -274,28 +275,26 @@
 	              		</div>
 						<div class="col-{% if forloop.counter == 1 %}lg{%endif%}{% if forloop.counter > 1 %}md{% endif %}-8">
 
-								{% if i.category.is_root_node %}
-								<h2>{{ i.title }}</h2>
-	              			    <p>{{ i.content }}</p>
-								{% endif %}
-
+								<h2>{{ i.title}}</h2>
+	              			    <p>{{ i.content}}</p>
 
 							<div class="row mt-5 pt-2">
 
-								{% if i.category.is_root_node %}
+									{%  for x in i.category.get_children  %}
 
 											<div class="col-lg-6">
 													<div class="services-2 d-flex">
 														<div class="icon mt-2 mr-3 d-flex justify-content-center align-items-center"><span class="flaticon-first-aid-kit"></span></div>
 														<div class="text">
 
-															<h3>{{ i.title }}</h3>
-															<p>{{i.content }}</p>
+
+															<h3>{{ x}}</h3>
+															<p>{{i.content}}</p>
 														</div>
 
 													</div>
 												</div>
-							{% endif %}
+										{% endfor %}
 
 						</div>
 						</div>
@@ -320,21 +319,21 @@
         </div>
 
 
-{% if latest_dentist_list %}
+{% if dentists %}
     <ul>
     <div class="row-doc">
-	    {% for dentist in latest_dentist_list %}
+	    {% for i in dentists %}
 
 					<div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="staff">
 							<div class="img-wrap d-flex align-items-stretch">
-								<div class="img align-self-stretch" style="background-image: url({{dentist.dentist_photo.url }});"></div>
+								<div class="img align-self-stretch" style="background-image: url({{i.dentist_photo.url }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. {{ dentist.dentist_name}}</h3>
-								<span class="position mb-2">{{dentist.dentist_specialization}}</span>
+								<h3>Dr. {{ i.dentist_name}}</h3>
+								<span class="position mb-2">{{i.dentist_specialization}}</span>
 								<div class="faded">
-									<p>{{dentist.dentist_about}}</p>
+									<p>{{i.dentist_about}}</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
